@@ -1,0 +1,39 @@
+{
+  "name": "openclaw-topology-memory-integration",
+  "version": "1.0.0",
+  "description": "OpenClaw 拓扑记忆集成 - 突破 token 限制，实现无限上下文",
+  "main": "topology-memory-integration.js",
+  "bin": {
+    "openclaw-topology-memory": "./cli.js"
+  },
+  "scripts": {
+    "test": "node cli.js test",
+    "start": "node cli.js",
+    "dev": "node cli.js test"
+  },
+  "keywords": [
+    "openclaw",
+    "topology",
+    "memory",
+    "context",
+    "ai",
+    "integration"
+  ],
+  "author": "牧云野",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.6.0",
+    "commander": "^11.1.0"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/openclaw/topology-memory-integration.git"
+  },
+  "bugs": {
+    "url": "https://github.com/openclaw/topology-memory-integration/issues"
+  },
+  "homepage": "https://github.com/openclaw/topology-memory-integration#readme"
+}
