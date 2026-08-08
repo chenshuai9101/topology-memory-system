@@ -502,7 +502,7 @@ class MemoryPatternCluster:
         elif method == 'gmm':
             return GaussianMixture(
                 n_components=n_clusters,
-                random_state=self.config.hyper                random_state=self.config.hyperparameters.get('random_state', 42)
+                random_state=self.config.hyperparameters.get('random_state', 42)
             )
         else:
             return KMeans(

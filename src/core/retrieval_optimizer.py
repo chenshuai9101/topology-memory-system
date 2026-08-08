@@ -531,4 +531,27 @@ class RetrievalOptimizer:
         score = 0.0
         
         # 1. 基于内容类型的偏好
-        content
+        content = result.get('content', '') or ''
+        content_type = result.get('content_type', '')
+        
+        # 内容类型偏好权重
+        type_weight = user_prefs.get(f"type_{content_type}", 0.5)
+        score += type_weight * 0.3
+        
+        # 2. 关键词偏好匹配
+        if content:
+            for keyword, weight in user_prefs.items():
+                if keyword.startswith("keyword_") and keyword[8:] in content:
+                    score += weight * 0.5
+        
+        # 3. 时间衰减（近期内容更符合用户偏好）
+        created_at = result.get('created_at')
+        if created_at:
+            try:
+                created_dt = datetime.fromisoformat(str(created_at).replace('Z', '+00:00'))
+                age_hours = (datetime.now() - created_dt).total_seconds() / 3600.0
+                score += max(0.0, 1.0 - age_hours / 168.0) * 0.2
+            except (ValueError, TypeError):
+                pass
+        
+        return min(1.0, score)

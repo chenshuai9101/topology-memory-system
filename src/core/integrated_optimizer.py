@@ -4,15 +4,15 @@
 """
 
 import time
-import json
-from datetime import datetime, timedelta
+import numpy as np
+from datetime import datetime
 from typing import Dict, List, Optional, Any, Tuple
 import logging
 from dataclasses import dataclass, field
 
-from .memory_optimizer import MemoryOptimizer, CompressionConfig, MemoryQualityMetrics
-from .association_optimizer import AssociationOptimizer, AssociationConfig, AssociationMetrics
-from .retrieval_optimizer import RetrievalOptimizer, RetrievalConfig, RetrievalMetrics
+from .memory_optimizer import MemoryOptimizer, CompressionConfig
+from .association_optimizer import AssociationOptimizer, AssociationConfig
+from .retrieval_optimizer import RetrievalOptimizer, RetrievalConfig
 
 logger = logging.getLogger(__name__)
 
@@ -324,7 +324,7 @@ class IntegratedOptimizer:
             'optimized_at': datetime.now().isoformat()
         }
         
-        logger.info(f"Retrieval system optimization completed")
+        logger.info("Retrieval system optimization completed")
         
         return optimization_result
     
@@ -480,4 +480,21 @@ class IntegratedOptimizer:
         
         for node in nodes:
             quality_metrics = node.get('quality_metrics')
-            if quality_
+            if quality_metrics:
+                if isinstance(quality_metrics, dict):
+                    score = quality_metrics.get('overall_score') or quality_metrics.get('score')
+                    if score is not None:
+                        quality_scores.append(float(score))
+                elif isinstance(quality_metrics, (int, float)):
+                    quality_scores.append(float(quality_metrics))
+        
+        if not quality_scores:
+            return {'count': 0}
+        
+        return {
+            'count': len(quality_scores),
+            'avg_score': np.mean(quality_scores),
+            'min_score': np.min(quality_scores),
+            'max_score': np.max(quality_scores),
+            'std_score': np.std(quality_scores)
+        }

@@ -174,7 +174,7 @@ class OptimizedContextManager:
         # 清理相关
         self.last_cleanup = time.time()
         
-        logger.info(f"OptimizedContextManager initialized")
+        logger.info("OptimizedContextManager initialized")
     
     def create_context(self, session_id: str, user_id: str, context_type: str,
                       content: Dict[str, Any], metadata: Dict[str, Any],

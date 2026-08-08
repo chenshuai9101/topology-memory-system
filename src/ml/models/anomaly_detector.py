@@ -499,8 +499,6 @@ class AnomalyDetector:
         
         # 分离正常和异常样本
         normal_indices = np.where(np.array(y_data) == 0)[0]
-        anomaly_indices = np.where(np.array(y_data) ==        # 分离正常和异常样本
-        normal_indices = np.where(np.array(y_data) == 0)[0]
         anomaly_indices = np.where(np.array(y_data) == 1)[0]
         
         print(f"正常样本: {len(normal_indices)}，异常样本: {len(anomaly_indices)}")

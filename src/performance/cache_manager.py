@@ -6,7 +6,7 @@
 import time
 import threading
 from datetime import datetime, timedelta
-from typing import Dict, Any, Optional, Tuple
+from typing import Dict, Any, Optional, Tuple, List
 from collections import OrderedDict
 import logging
 

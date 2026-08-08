@@ -282,6 +282,6 @@ if __name__ == "__main__":
         top_sources = router.get_top_sources(query, top_n=3)
         
         print(f"   🎯 检测任务类型: {router._detect_task_type(query)}")
-        print(f"   📊 Top 3数据源:")
+        print("   📊 Top 3数据源:")
         for source, prob in top_sources:
             print(f"      - {source}: {prob:.2f}")

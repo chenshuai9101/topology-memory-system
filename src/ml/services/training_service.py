@@ -556,8 +556,6 @@ class TrainingService:
         
         if model_type in [ModelType.PREDICTOR, ModelType.ANOMALY]:
             # 需要节点和上下文
-            if len(data) > 0 and isinstance(data[0], tuple) and len(data        if model_type in [ModelType.PREDICTOR, ModelType.ANOMALY]:
-            # 需要节点和上下文
             if len(data) > 0 and isinstance(data[0], tuple) and len(data[0]) == 2:
                 node_data, context_data = data[0]
                 features = feature_extractor.extract_combined_features(node_data, context_data)

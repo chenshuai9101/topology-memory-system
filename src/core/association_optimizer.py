@@ -482,4 +482,16 @@ class AssociationOptimizer:
         try:
             # 解析时间
             if isinstance(time_i, str):
-                dt_i =
+                dt_i = datetime.fromisoformat(time_i.replace('Z', '+00:00'))
+            else:
+                dt_i = time_i
+            if isinstance(time_j, str):
+                dt_j = datetime.fromisoformat(time_j.replace('Z', '+00:00'))
+            else:
+                dt_j = time_j
+            
+            # 时间差越小相关性越高（按天指数衰减）
+            delta_hours = abs((dt_j - dt_i).total_seconds()) / 3600.0
+            return max(0.0, 1.0 - delta_hours / 24.0)
+        except (ValueError, TypeError):
+            return 0.5  # 解析失败时返回默认值

@@ -465,4 +465,22 @@ class MLMetrics:
         # 按类别组织指标
         metric_categories = {
             '基础指标': ['accuracy', 'precision', 'recall', 'f1_score', 'r2_score', 'mse', 'rmse'],
-            '时间指标': ['
+            '时间指标': ['inference_time_ms_mean', 'inference_time_ms_p95', 'throughput_samples_per_second'],
+            '资源指标': ['memory_usage_mb', 'peak_memory_mb', 'cpu_usage_percent'],
+            '训练指标': ['train_loss', 'val_loss', 'epochs', 'train_time_s']
+        }
+        
+        for category, metric_list in metric_categories.items():
+            report_lines.append(f"\n{category}:")
+            for metric in metric_list:
+                if metric in metrics:
+                    value = metrics[metric]
+                    if isinstance(value, float):
+                        report_lines.append(f"  {metric}: {value:.4f}")
+                    else:
+                        report_lines.append(f"  {metric}: {value}")
+        
+        report_lines.append("")
+        report_lines.append("=" * 50)
+        
+        return "\n".join(report_lines)

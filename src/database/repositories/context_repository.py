@@ -7,7 +7,7 @@ from datetime import datetime, timedelta
 from typing import Optional, List, Dict, Any
 from uuid import UUID
 
-from sqlalchemy import and_, or_, desc, func
+from sqlalchemy import and_, or_, desc, func, String
 from sqlalchemy.orm import joinedload
 
 from .base_repository import BaseRepository

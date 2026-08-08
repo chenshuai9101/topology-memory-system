@@ -428,4 +428,10 @@ class MemoryOptimizer:
         
         # 简单可读性指标
         avg_sentence_length = len(words) / len(sentences)
-        avg_word_length = sum(len(w) for w in words) /
+        avg_word_length = sum(len(w) for w in words) / len(words) if words else 0
+        
+        # 可读性评分（0-1）：句子短、词短、结构简单得分高
+        sentence_score = max(0.0, 1.0 - avg_sentence_length / 30.0)
+        word_score = max(0.0, 1.0 - avg_word_length / 12.0)
+        
+        return round(0.6 * sentence_score + 0.4 * word_score, 4)

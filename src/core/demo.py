@@ -392,7 +392,7 @@ def main():
         
         # 检查性能要求
         if avg_response < 50:
-            print(f"✓ 平均响应时间满足要求 (<50ms)")
+            print("✓ 平均响应时间满足要求 (<50ms)")
         else:
             print(f"✗ 平均响应时间未满足要求: {avg_response:.2f}ms > 50ms")
         

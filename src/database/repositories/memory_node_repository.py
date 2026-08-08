@@ -12,6 +12,7 @@ from sqlalchemy.orm import joinedload
 
 from .base_repository import BaseRepository
 from ..models.memory_nodes import MemoryNode, NodeCluster, NodeVersion
+from ..models.associations import Association
 
 logger = logging.getLogger(__name__)
 

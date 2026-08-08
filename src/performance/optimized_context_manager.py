@@ -546,4 +546,40 @@ class OptimizedContextManager:
             # 更新上下文
             update_dict = {}
             if update_data.content is not None:
-                update_dict['
+                update_dict['content'] = update_data.content
+            if update_data.metadata is not None:
+                update_dict['metadata'] = update_data.metadata
+            if update_data.priority is not None:
+                update_dict['priority'] = update_data.priority
+            if update_data.ttl is not None:
+                update_dict['ttl'] = update_data.ttl
+            
+            if not update_dict:
+                return context_entry.to_response()
+            
+            # 应用更新
+            context_entry.update(update_dict)
+            
+            # 重新存储（如需压缩）
+            if self.enable_compression:
+                self.context_by_id[context_id] = CompressedContextEntry(context_entry)
+            else:
+                self.context_by_id[context_id] = context_entry
+            
+            # 更新优先级索引
+            if context_entry.priority != old_priority:
+                if old_priority in self.priority_index and context_id in self.priority_index[old_priority]:
+                    self.priority_index[old_priority].discard(context_id)
+                self.priority_index.setdefault(context_entry.priority, set()).add(context_id)
+            
+            # 更新缓存
+            if self.cache:
+                self.cache.put(context_id, context_entry)
+            
+            elapsed = (time.perf_counter() - start_time) * 1000
+            self.metrics.record_operation('update', elapsed)
+            
+            return context_entry.to_response()
+
+        finally:
+            self.rw_lock.release_write()
